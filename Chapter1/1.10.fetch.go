@@ -16,6 +16,7 @@ func main() {
 		}
 
 		resbytes, err := ioutil.ReadAll(resp.Body)
+		resp.Body.Close()
 
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "%v\n", err)

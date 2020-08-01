@@ -18,6 +18,7 @@ func main() {
 			//printWithBuffio(resp.Body)
 			fmt.Println("printing with io.copy")
 			printwithCopy(resp.Body, os.Stdout)
+			resp.Body.Close()
 		}
 
 	}
