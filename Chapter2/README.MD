@@ -2,7 +2,7 @@
 
 ### Structural Hierarchy
 
-The basic structural hierarchy of go programming language is as follows.
+The basic structural hierarchy of go programming language is as follows:
 Expressions -> Statements -> Functions -> Packages
 
 ### Naming Conventions
@@ -35,7 +35,26 @@ There are a set of 25 reserved keywords in Go that cannot be used for naming a v
  24. `type` *-> a keyword used when creating complex types in golang*
  25. `var` *->  a keyword used when declaring a variable*
 
-##### Scope of a Variable:
+### Declaration
+Usually when we declare something in a programming language we are essentially
+we are creating named entities and declare some or all of its its properties
+
+<pre>
+func add(a int, b int) {
+    return a+b
+}
+</pre>
+
+In the above example we are declaring a function and its behavior. Similarly we also create
+a variable like shown below:
+
+<pre>
+var a int = 1
+</pre>
+
+In the example above we are creating a variable by name 'a' of type int that takes a value of 1.
+
+### Scope of a Variable:
 When a variable is declared inside a function its scope exists within that function.
 Similarly when a function is declared in a block { } its scope exists withing that block { }.
 A variable declared outside the function is accessible throughout the package and if a
