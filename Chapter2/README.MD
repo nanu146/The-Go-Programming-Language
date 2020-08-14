@@ -114,8 +114,69 @@ a = 2 // existing variable 'a' takes the value 2
 
 
 ### Scope of a Variable:
-When a variable is declared inside a function its scope exists within that function.
-Similarly when a function is declared in a block { } its scope exists withing that block { }.
-A variable declared outside the function is accessible throughout the package and if a
-package level variable is starts with a capital letter it is visible outside the package and
-if the variable starts with a small letter its visibility is withing the package and cannot be exported out.
+When a variable is declared inside a function it is visible only with in that function. This visibility is also called scope.
+A variable declared outside the function is accessible throughout the package. Instead, if we want to make a variable visible outside
+the package then the variable name should start with a capital letter.
+
+### Pointers
+Pointers are a special kind of variable that can hold the address of a value.  Since a value can be of any type, it is essential to denote the data type of the value in a statically typed language like golang. Hence, the syntax for declaring a pointer goes something like this:
+
+var variableName * int = & OtherVariabelOfTypeInt
+
+The `*` symbol in the above expression helps the compiler understand that we are trying to create a variable of name `variableName` of the type int pointer.
+Below is an example on working with pointers.
+
+<pre>
+func main() {
+	var a int = 1
+	var b * int = &a
+	
+	fmt.Println(b)
+}
+<a href="https://play.golang.org/p/qrNBGTlk7Nl" > Example </a>
+</pre>
+
+An important thing to remember is that pointers are variable that hold address location of a value and it gets that address location
+as shared in the example above with `&` operator. Now knowing that fact look at the example below and estimate what would be the result.
+
+<pre>
+func main() {
+	var a * int = & int(1)
+	
+	fmt.Println(a)
+}
+</pre>
+
+If you have guessed that the above piece of code errors out then you are correct. When the compiler intercepts the statement `var a * int = & int(1)`, 
+it tries to evaluate from right to left since it's an assignment operator. Since the left hand side `int(1)` never got assigned to a variable so it is never
+stored and hence using `&` operator to get address location errors out. Look at this behavior we might be tempted to alter the definition of a pointer to:
+ A pointer is a special variable that takes address of a variable as value. This would be true if a pointer always takes a variable's address.
+ But there is `new` operator in golang which creates a pointer without creating a variable.
+ 
+ <pre>
+ func main(){
+ 
+	var a * int = new(int)
+	
+	fmt.Println(a)
+ }
+ </pre>
+ 
+ The de-referencing operator `*` is used to get the value at a given address.
+ 
+ <pre>
+    var a int = 8
+    var c * int = &a
+    
+    fmt.Println(*c) // outputs value: 8
+ </pre> 
+ 
+ Consider the below example:
+ 
+ <pre>
+ 	var a int = 8
+ 	var b * int = &a
+ 	var c int = *&a
+ 	
+ 	fmt.Println(b, c) // output: address location 8
+ </pre>
