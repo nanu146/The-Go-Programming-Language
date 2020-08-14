@@ -150,33 +150,79 @@ func main() {
 If you have guessed that the above piece of code errors out then you are correct. When the compiler intercepts the statement `var a * int = & int(1)`, 
 it tries to evaluate from right to left since it's an assignment operator. Since the left hand side `int(1)` never got assigned to a variable so it is never
 stored and hence using `&` operator to get address location errors out. Look at this behavior we might be tempted to alter the definition of a pointer to:
- A pointer is a special variable that takes address of a variable as value. This would be true if a pointer always takes a variable's address.
- But there is `new` operator in golang which creates a pointer without creating a variable.
- 
- <pre>
- func main(){
- 
-	var a * int = new(int)
-	
-	fmt.Println(a)
- }
- </pre>
- 
- The de-referencing operator `*` is used to get the value at a given address.
- 
- <pre>
+A pointer is a special variable that takes address of a variable as value. This would be true if a pointer always takes a variable's address.
+But there is `new` operator in golang which creates a pointer without creating a variable.
+
+<pre>
+func main(){
+
+    var a * int = new(int)
+    
+    fmt.Println(a)
+}
+</pre>
+
+The de-referencing operator `*` is used to get the value at a given address.
+
+<pre>
     var a int = 8
     var c * int = &a
     
     fmt.Println(*c) // outputs value: 8
- </pre> 
+</pre> 
+
+Consider the below example:
+
+<pre>
+    var a int = 8
+    var b * int = &a
+    var c int = *&a
+    
+    fmt.Println(b, c) // output: address location 8
+</pre>
+
+### Packages
+Packages are what libraries are in languages like c, javascript. They provide modular code development. A package name is declared at the top 
+of the go files. Usually when we write main function we declare that in the package called `main`. In a code base the main package is initialized first before other
+packages. 
+
+<pre>
+package main
+
+import (
+    "fmt"
+)
+
+func main(){
+    fmt.Println("Hello World!")
+}
+</pre>
+
+All the files that belong to a package will have the same package name in the declaration section of a package.
+Usually the package name should take the same name as the folder in which it resides. This is a good practice to follow
+as it makes it easy to know which package source files reside in which folder.
+
+When a package is initialized its dependencies are resolved first. This holds true for variables as well. Look at the below example:
+
+<pre>
+package somepackage
+
+var a = c + b
+
+var c = b + 1
+
+var b = 2
+
+func main(){
+    fmt.Println(a, b, c) // output: 5 3 2 
+}
  
- Consider the below example:
+</pre>
+
+The above code is completely valid and `b` is resolved first before resolving `a` and `c` as they both are dependent on b even though `a` and `c`
+appear before `b`. 
+
+There is special function `init` which initializes a package. This function cannot be called or referenced manually.
+But it is automatically called whenever the package is initialized. If every file in a package has a init function the all those functions will be called 
+in the ascending order of the file names in which they are written. This is because the compiler processes the files in ascending order or there name by default.
  
- <pre>
- 	var a int = 8
- 	var b * int = &a
- 	var c int = *&a
- 	
- 	fmt.Println(b, c) // output: address location 8
- </pre>
