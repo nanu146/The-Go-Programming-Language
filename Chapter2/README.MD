@@ -121,7 +121,7 @@ the package then the variable name should start with a capital letter.
 ### Pointers
 Pointers are a special kind of variable that can hold the address of a value.  Since a value can be of any type, it is essential to denote the data type of the value in a statically typed language like golang. Hence, the syntax for declaring a pointer goes something like this:
 
-var variableName * int = & OtherVariabelOfTypeInt
+`var variableName * int = & OtherVariabelOfTypeInt`
 
 The `*` symbol in the above expression helps the compiler understand that we are trying to create a variable of name `variableName` of the type int pointer.
 Below is an example on working with pointers.
